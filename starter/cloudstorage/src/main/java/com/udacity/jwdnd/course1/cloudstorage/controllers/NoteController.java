@@ -7,13 +7,12 @@ import com.udacity.jwdnd.course1.cloudstorage.models.User;
 import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
-@RequestMapping
+@RequestMapping("/note")
 public class NoteController {
 
     private NoteService noteService;
@@ -22,12 +21,19 @@ public class NoteController {
         this.noteService = noteService;
     }
 
-//    @GetMapping("/home")
-//    public String getNotes(@ModelAttribute("fileUpload") File file, @ModelAttribute("note") Note note, @ModelAttribute("credential") Credential credential, Model model){
+//    @GetMapping("/get")
+//    public String getNotes(@RequestParam(required = false) Integer id, @ModelAttribute("note") Note note, Model model){
+//        this.noteService.deleteNote(id);
 //        model.addAttribute("notes", this.noteService.getAllNotes());
 //        return "home";
 //    }
-//    @PostMapping("/note")
+//    @GetMapping("/delete")
+//    public String deleteNote(@RequestParam(required = false) Integer id, @ModelAttribute("note") Note note, Model model){
+//        this.noteService.deleteNote(id);
+//        model.addAttribute("notes", this.noteService.getAllNotes());
+//        return "home";
+//    }
+//    @PostMapping
 //    public String addNote(@ModelAttribute("note") Note note, Model model) {
 //        this.noteService.createNote(note);
 //        return "home";

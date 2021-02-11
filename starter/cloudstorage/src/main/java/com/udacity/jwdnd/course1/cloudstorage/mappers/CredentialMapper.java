@@ -11,6 +11,9 @@ public interface CredentialMapper {
     @Select("SELECT * FROM CREDENTIALS")
     List<Credential> getAllCredentials();
 
+    @Select("SELECT * FROM CREDENTIALS WHERE credentialid = #{credentialid}")
+    Credential findCredentailById(Integer credentialid);
+
     @Insert("INSERT INTO CREDENTIALS (url, username, key, password, userid) VALUES(#{url}, #{username}, #{key}, #{password}, #{userid})")
     @Options(useGeneratedKeys = true, keyProperty = "credentialid")
     int addCredential(Credential credential);
@@ -19,5 +22,5 @@ public interface CredentialMapper {
     int updateCredentail(Credential credential);
 
     @Delete("DELETE FROM CREDENTIALS WHERE credentialid = #{credentialid}")
-    int deleteCredential(Credential credential);
+    int deleteCredential(Integer credentialid);
 }

@@ -18,12 +18,17 @@ public class FileService {
     public List<File> getAllFiles(){
         return this.fileMapper.getAllFiles();
     }
-
+    public File findFileByName(String fileName){
+        return this.fileMapper.findFileByName(fileName);
+    }
+    public int updateFile(File file){
+        return this.fileMapper.updateFile(file);
+    }
     public int uploadFile(File file){
         return this.fileMapper.uploadFile(file);
     }
 
-    public int deleteFile(File file){
-        return this.fileMapper.deleteFile(file);
+    public int deleteFile(Integer fileId){
+        return this.fileMapper.deleteFile(fileId);
     }
 }

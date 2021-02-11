@@ -13,6 +13,9 @@ public interface NoteMapper {
     @Select("SELECT * FROM NOTES")
     List<Note> getAllNotes();
 
+    @Select("SELECT * FROM NOTES WHERE noteid = #{noteid}")
+    Note findNoteById(Integer noteid);
+
     @Insert("INSERT INTO NOTES (notetitle, notedescription, userid) VALUES(#{notetitle}, #{notedescription}, #{userid})")
     @Options(useGeneratedKeys = true, keyProperty = "noteid")
     int createNote(Note note);
@@ -20,6 +23,6 @@ public interface NoteMapper {
     @Update("UPDATE NOTES SET notetitle = #{notetitle}, notedescription = #{notedescription} WHERE noteid = #{noteid}")
     int updateNote(Note note);
 
-    @Delete("DELETE FROM NOTES WHERE notetitle = #{notetitle}")
-    int deleteFile(Note note);
+    @Delete("DELETE FROM NOTES WHERE noteid = #{noteid}")
+    int deleteFile(Integer noteid);
 }
