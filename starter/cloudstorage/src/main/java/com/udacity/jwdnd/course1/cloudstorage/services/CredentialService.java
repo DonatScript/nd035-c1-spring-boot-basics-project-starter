@@ -2,6 +2,8 @@ package com.udacity.jwdnd.course1.cloudstorage.services;
 
 import com.udacity.jwdnd.course1.cloudstorage.mappers.CredentialMapper;
 import com.udacity.jwdnd.course1.cloudstorage.models.Credential;
+import com.udacity.jwdnd.course1.cloudstorage.models.User;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,15 +17,15 @@ public class CredentialService {
         this.credentialMapper = credentialMapper;
     }
 
-    public List<Credential> getAllCredentials(){
-        return this.credentialMapper.getAllCredentials();
+    public List<Credential> getAllCredentials(Integer userId){
+        return this.credentialMapper.getAllCredentials(userId);
     }
 
-    public Credential findCredentialById(Integer credenialid){
-        return this.credentialMapper.findCredentailById(credenialid);
+    public boolean findCredentialById(Integer credenialid){
+        return this.credentialMapper.findCredentailById(credenialid) != null;
     }
-    public int addCredential(Credential credential){
-        return this.credentialMapper.addCredential(credential);
+    public int addCredential(Credential credential, Integer userId){
+        return this.credentialMapper.addCredential(new Credential(credential.getCredentialid(),credential.getUrl(), credential.getUsername(), credential.getKey(), credential.getPassword(), userId));
     }
 
     public int updateCredential(Credential credential){

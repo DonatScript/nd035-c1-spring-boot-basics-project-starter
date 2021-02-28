@@ -1,8 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.mappers;
 
-import com.udacity.jwdnd.course1.cloudstorage.models.File;
 import com.udacity.jwdnd.course1.cloudstorage.models.Note;
-import com.udacity.jwdnd.course1.cloudstorage.models.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -10,8 +8,8 @@ import java.util.List;
 @Mapper
 public interface NoteMapper {
 
-    @Select("SELECT * FROM NOTES")
-    List<Note> getAllNotes();
+    @Select("SELECT * FROM NOTES WHERE userid = #{userid}")
+    List<Note> getAllNotes(Integer userid);
 
     @Select("SELECT * FROM NOTES WHERE noteid = #{noteid}")
     Note findNoteById(Integer noteid);

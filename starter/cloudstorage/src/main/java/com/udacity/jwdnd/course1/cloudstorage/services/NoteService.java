@@ -14,16 +14,16 @@ public class NoteService {
         this.noteMapper = noteMapper;
     }
 
-    public List<Note> getAllNotes(){
-        return this.noteMapper.getAllNotes();
+    public List<Note> getAllNotes(Integer userid){
+        return this.noteMapper.getAllNotes(userid);
     }
 
-    public Note findNoteById(Integer noteid){
-        return this.noteMapper.findNoteById(noteid);
+    public boolean findNoteById(Integer noteid){
+        return this.noteMapper.findNoteById(noteid) != null;
     }
 
-    public int createNote(Note note){
-        return this.noteMapper.createNote(note);
+    public int createNote(Note note, Integer userId){
+        return this.noteMapper.createNote(new Note(null, note.getNotetitle(), note.getNotedescription(), userId));
     }
 
     public int updateNote(Note note){
