@@ -30,13 +30,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.formLogin()
                 .loginPage("/login")
+                .defaultSuccessUrl("/home", true)
+                .failureUrl("/login?error=true")
+                .permitAll()
+                .and()
+                .logout()
+                .logoutSuccessUrl("/login?logout=true")
+                .invalidateHttpSession(true)
                 .permitAll();
-
-        http.formLogin()
-                .defaultSuccessUrl("/home", true);
-
-        http.logout()
-                .clearAuthentication(true)
-                .logoutSuccessUrl("/login");
     }
 }

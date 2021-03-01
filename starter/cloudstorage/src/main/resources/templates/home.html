@@ -11,7 +11,7 @@
     <body class="p-3 mb-2 bg-light text-black">
         <div class="container">
             <div id="logoutDiv">
-                <form action="#" th:action="@{/logout}" method="POST">
+                <form action="#" th:action="@{/logout   }" method="POST">
                     <button type="submit" class="btn btn-secondary float-right">Logout</button>
                 </form>
             </div>
@@ -25,7 +25,7 @@
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-files" role="tabpanel" aria-labelledby="nav-files-tab">
-                        <form action="#" enctype="multipart/form-data" th:action="@{/home}" method="POST">
+                        <form action="#" enctype="multipart/form-data" th:action="@{/file/upload}" method="POST">
                             <div class="container">
                                 <div class="row" style="margin: 1em;">
                                     <div class="col-sm-2">
@@ -54,7 +54,7 @@
                                     <tr th:each="file: ${files}">
                                         <td>
                                             <a th:href="@{'FilesUploaded/' + ${file.filename}}" th:target="_blank" class="btn btn-success" download>View</a>
-                                            <a  th:href="@{'/home?operation=delete&operationModel=file&id=' + ${file.fileId}}" class="btn btn-danger">Delete</a>
+                                            <a  th:href="@{'/file/delete?id=' + ${file.fileId}}" class="btn btn-danger">Delete</a>
                                         </td>
                                         <th scope="row" th:text="${file.filename}">ExampleFile.txt</th>
                                         <td th:text="${file.contenttype}">Content-Type</td>
@@ -84,7 +84,7 @@
                                             <button type="button" class="btn btn-success"
                                                     th:attr="data-id=${note.noteid}, data-title=${note.notetitle}, data-desc=${note.notedescription}"
                                                     th:onclick="showNoteModal(this.getAttribute('data-id'), this.getAttribute('data-title'), this.getAttribute('data-desc'));">Edit</button>
-                                            <a th:href="@{'/home?operation=delete&operationModel=note&id=' + ${note.noteid}}" class="btn btn-danger">Delete</a>
+                                            <a th:href="@{'/note/delete?id=' + ${note.noteid}}" class="btn btn-danger">Delete</a>
                                         </td>
                                         <th scope="row" th:text="${note.notetitle}">Example Note Title</th>
                                         <td th:text="${note.notedescription}">Example Note Description </td>
@@ -103,7 +103,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="#" th:action="@{/home}" th:object="${note}" method="POST">
+                                        <form action="#" th:action="@{/note/create}" th:object="${note}" method="POST">
                                             <input th:field="*{noteid}" type="hidden" name="noteId" id="note-id">
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">Title</label>
@@ -145,7 +145,7 @@
                                         <button type="button" class="btn btn-success"
                                                 th:attr="data-id=${credential.credentialid}, data-url=${credential.url}, data-username=${credential.username}, data-password=${credential.password}"
                                                 th:onclick="showCredentialModal(this.getAttribute('data-id'), this.getAttribute('data-url'), this.getAttribute('data-username'), this.getAttribute('data-password'));">Edit</button>
-                                        <a th:href="@{'/home?operation=delete&operationModel=credential&id=' + ${credential.credentialid}}" class="btn btn-danger">Delete</a>
+                                        <a th:href="@{'/credential/delete?id=' + ${credential.credentialid}}" class="btn btn-danger">Delete</a>
                                     </td>
                                     <th scope="row" th:text="${credential.url}">Example Credential URL</th>
                                     <td th:text="${credential.username}">Example Credential Username</td>
@@ -165,7 +165,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form th:action="@{/home}" th:object="${credential}" action="#" method="POST">
+                                        <form th:action="@{/credential/create}" th:object="${credential}" action="#" method="POST">
                                             <input th:field="*{credentialid}" type="hidden" name="credentialId" id="credential-id">
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">URL</label>

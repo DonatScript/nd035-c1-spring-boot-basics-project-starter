@@ -18,8 +18,8 @@ public class FileService {
     public List<FileResource> getAllFiles(Integer userId){
         return this.fileMapper.getAllFiles(userId);
     }
-    public boolean findFileByName(String fileName){
-        return this.fileMapper.findFileByName(fileName) != null;
+    public FileResource findFileByName(String fileName){
+        return this.fileMapper.findFileByName(fileName);
     }
     public int uploadFile(FileResource file){
         return this.fileMapper.uploadFile(file);

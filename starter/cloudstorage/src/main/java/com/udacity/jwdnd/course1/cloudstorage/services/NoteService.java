@@ -31,6 +31,6 @@ public class NoteService {
     }
 
     public int deleteNote(Integer noteid){
-        return this.noteMapper.deleteFile(noteid);
+        return this.noteMapper.deleteNote(noteid);
     }
 }
