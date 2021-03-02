@@ -27,33 +27,40 @@ public class FileController {
     }
 
     @GetMapping("/delete")
-    public String getFiles(Authentication authentication, @RequestParam(required = false) Integer id , @ModelAttribute("fileUpload") MultipartFile fileUpload,Model model){
+    public String getFiles(Authentication authentication, @RequestParam(required = false) Integer id , @ModelAttribute("fileUpload") MultipartFile fileUpload, Model model){
         String username = authentication.getName();
         User user = this.userService.getUser(username);
         Integer userId = user.getUserId();
         this.fileService.deleteFile(id);
+        model.addAttribute("resultStatus", "Success");
+        model.addAttribute("resultMessage", "File has been deleted");
         model.addAttribute("files", this.fileService.getAllFiles(userId));
-        return "redirect:/home";
+        return "result";
     }
 
     @PostMapping("/upload")
-    public String uploadFile(Authentication authentication, @RequestAttribute("fileUpload") MultipartFile fileUpload, @ModelAttribute Note note, @ModelAttribute Credential credential, Model model) throws IOException {
+    public String uploadFile(Authentication authentication, @RequestAttribute("fileUpload") MultipartFile fileUpload, Model model) throws IOException {
         String username = authentication.getName();
         User user = this.userService.getUser(username);
         Integer userId = user.getUserId();
-        if(fileUpload != null){
-            if(!fileUpload.isEmpty()){
-                if(this.fileService.findFileByName(fileUpload.getOriginalFilename()) == null){
-                    FileResource file = this.readFileInputStream(fileUpload, userId);
-                    Integer fileID = this.fileService.uploadFile(file);
-                    file.setFileId(fileID);
-                }else{
-                    // file was uploaded
-                }
+        if(!fileUpload.isEmpty()){
+            if(this.fileService.findFileByName(fileUpload.getOriginalFilename()) == null){
+                FileResource file = this.readFileInputStream(fileUpload, userId);
+                Integer fileID = this.fileService.uploadFile(file);
+                file.setFileId(fileID);
+                model.addAttribute("resultMessage", "File has been created.");
+                model.addAttribute("resultStatus", "Success");
+            }else{
+                model.addAttribute("resultMessage", "File was uploaded.");
+                model.addAttribute("resultStatus", "Error");
             }
+        }else{
+            model.addAttribute("resultStatus", "Error");
+            model.addAttribute("resultMessage", "Something was wrong in file, it's not uploaded.");
         }
+
         model.addAttribute("files", this.fileService.getAllFiles(userId));
-        return "redirect:/home";
+        return "result";
     }
 
     private FileResource readFileInputStream(MultipartFile fileUpload, Integer userId) throws IOException {

@@ -24,26 +24,32 @@ public class CredentailController {
     }
 
     @GetMapping("/delete")
-    public String deleteCredential(Authentication authentication, @RequestParam(required = false) Integer id , @ModelAttribute Credential credential, @ModelAttribute Note note, Model model){
+    public String deleteCredential(Authentication authentication, @RequestParam(required = false) Integer id , @ModelAttribute Credential credential, Model model){
         String username = authentication.getName();
         User user = this.userService.getUser(username);
         Integer userId = user.getUserId();
         this.credentialService.deleteCredential(id);
+        model.addAttribute("resultStatus", "Success");
+        model.addAttribute("resultMessage", "Credential has been deleted");
         model.addAttribute("credentials", this.credentialService.getAllCredentials(userId));
-        return "redirect:/home";
+        return "result";
     }
     @PostMapping("/create")
-    public String addCredential(Authentication authentication, @ModelAttribute Credential credential, @ModelAttribute Note note, Model model) {
+    public String addCredential(Authentication authentication, @ModelAttribute Credential credential, Model model) {
         String username = authentication.getName();
         User user = this.userService.getUser(username);
         Integer userId = user.getUserId();
+        credential.setUserid(userId);
         if(credential.getCredentialid() != null && this.credentialService.findCredentialById(credential.getCredentialid())){
             this.credentialService.updateCredential(credential);
+            model.addAttribute("resultMessage", "Credential has been updated");
         }else{
-            Integer credentialID = this.credentialService.addCredential(credential, user.getUserId());
+            Integer credentialID = this.credentialService.addCredential(credential);
             credential.setCredentialid(credentialID);
+            model.addAttribute("resultMessage", "Credential has been created");
         }
+        model.addAttribute("resultStatus", "Success");
         model.addAttribute("credentials", this.credentialService.getAllCredentials(userId));
-        return "redirect:/home";
+        return "result";
     }
 }

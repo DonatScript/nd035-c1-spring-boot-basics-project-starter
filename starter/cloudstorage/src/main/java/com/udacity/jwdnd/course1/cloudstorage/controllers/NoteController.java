@@ -23,32 +23,35 @@ public class NoteController {
     }
 
     @GetMapping("/delete")
-    public String deleteNote(Authentication authentication, @RequestParam(required = false) Integer id , @ModelAttribute Note note, @ModelAttribute Credential credential, Model model){
+    public String deleteNote(Authentication authentication, @RequestParam(required = false) Integer id , @ModelAttribute Note note, Model model){
         String username = authentication.getName();
         User user = this.userService.getUser(username);
         Integer userId = user.getUserId();
         this.noteService.deleteNote(id);
+        model.addAttribute("resultStatus", "Success");
+        model.addAttribute("resultMessage", "Note has been deleted");
         model.addAttribute("notes", this.noteService.getAllNotes(userId));
-        return "redirect:/result";
+        return "result";
     }
 
     @PostMapping("/create")
-    public String addNote(Authentication authentication, @ModelAttribute Note note, @ModelAttribute Credential credential, Model model) {
+    public String addNote(Authentication authentication, @ModelAttribute Note note, Model model) {
         String username = authentication.getName();
         User user = this.userService.getUser(username);
         Integer userId = user.getUserId();
+        note.setUserid(userId);
         if(note.getNoteid() != null && this.noteService.findNoteById(note.getNoteid())){
             this.noteService.updateNote(note);
+            model.addAttribute("resultMessage", "Note has been updated");
         }else {
-            Integer noteID = this.noteService.createNote(note, user.getUserId());
+            Integer noteID = this.noteService.createNote(note);
             note.setNoteid(noteID);
+            model.addAttribute("resultMessage", "Note has been created");
         }
 
-        model.addAttribute("notes", this.noteService.getAllNotes(userId));
         model.addAttribute("resultStatus", "Success");
-        model.addAttribute("resultM" +
-                "essage", "Note has been created");
-        return "redirect:/result";
+        model.addAttribute("notes", this.noteService.getAllNotes(userId));
+        return "result";
     }
 
 }

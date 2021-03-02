@@ -66,11 +66,4 @@ public class Credential {
         this.password = password;
     }
 
-    public Integer getUserId() {
-        return userid;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userid = userId;
-    }
 }

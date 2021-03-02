@@ -80,12 +80,12 @@ public class FileResource implements MultipartFile {
 
     @Override
     public String getOriginalFilename() {
-        return this.filename;
+        return this.getFilename();
     }
 
     @Override
     public String getContentType() {
-        return this.contenttype;
+        return this.getContenttype();
     }
 
     @Override
@@ -95,12 +95,12 @@ public class FileResource implements MultipartFile {
 
     @Override
     public long getSize() {
-        return this.filedata.length;
+        return this.getFilesize();
     }
 
     @Override
     public byte[] getBytes() throws IOException {
-        return this.filedata;
+        return this.getFiledata();
     }
 
     @Override

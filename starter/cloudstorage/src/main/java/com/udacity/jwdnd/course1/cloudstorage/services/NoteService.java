@@ -22,8 +22,8 @@ public class NoteService {
         return this.noteMapper.findNoteById(noteid) != null;
     }
 
-    public int createNote(Note note, Integer userId){
-        return this.noteMapper.createNote(new Note(null, note.getNotetitle(), note.getNotedescription(), userId));
+    public int createNote(Note note){
+        return this.noteMapper.createNote(note);
     }
 
     public int updateNote(Note note){

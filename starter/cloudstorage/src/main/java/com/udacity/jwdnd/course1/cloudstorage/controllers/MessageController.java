@@ -5,7 +5,10 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,8 +16,15 @@ import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 
 @Controller
+@RequestMapping("/error")
 public class MessageController  implements ErrorController {
 
+    @GetMapping
+    public String displayError(Model model){
+        model.addAttribute("resultStatus", "Success");
+        model.addAttribute("resultMessage", "Note has been deleted");
+        return "result";
+    }
     @ResponseStatus(value= HttpStatus.CONFLICT,
             reason="Data integrity violation")  // 409
     @ExceptionHandler(DataIntegrityViolationException.class)
@@ -30,7 +40,7 @@ public class MessageController  implements ErrorController {
         // Note that the exception is NOT available to this view (it is not added
         // to the model) but see "Extending ExceptionHandlerExceptionResolver"
         // below.
-        return "redirect:/result";
+        return "result";
     }
 
     // Total control - setup a model and return the view name yourself. Or
@@ -46,6 +56,6 @@ public class MessageController  implements ErrorController {
 
     @Override
     public String getErrorPath() {
-        return "redirect:/result";
+        return "result";
     }
 }
