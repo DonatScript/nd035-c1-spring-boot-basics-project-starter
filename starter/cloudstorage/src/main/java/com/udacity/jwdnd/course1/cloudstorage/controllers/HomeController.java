@@ -40,4 +40,5 @@ public class HomeController {
         model.addAttribute("credentials", this.credentialService.getAllCredentials(userId));
         return "home";
     }
+
 }
